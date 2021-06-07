@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ChooseLocation extends StatefulWidget {
-  static String id = "ChooseLocation";
+  static const id = "ChooseLocation";
   @override
   _ChooseLocationState createState() => _ChooseLocationState();
 }
@@ -17,9 +17,12 @@ class _ChooseLocationState extends State<ChooseLocation> {
         child: Column(
           children: [
             Text('اختر الدائرة الانتخابية'),
-            DropdownButtonFormField(onChanged: null, items: <DropdownMenuItem>[
-              DropdownMenuItem(value: 1, child: Text("123"))
-            ])
+            DropdownButtonFormField(
+              onChanged: null,
+              items: <DropdownMenuItem>[
+                DropdownMenuItem(value: 1, child: Text("123"))
+              ],
+            )
           ],
         ),
       ),

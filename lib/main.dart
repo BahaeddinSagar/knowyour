@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:knowyour/nomineeDetails.dart';
+
+import 'package:knowyour/nomineeList.dart';
 import 'package:knowyour/chooseLocation.dart';
 import 'package:knowyour/homePage.dart';
 import 'package:knowyour/newsPage.dart';
@@ -12,6 +16,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalCupertinoLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [Locale('ar', '')],
+      locale: Locale('ar', ''),
       title: 'اعرف ناخبك',
       theme: ThemeData(
         primarySwatch: Colors.orange,
@@ -20,7 +31,9 @@ class MyApp extends StatelessWidget {
       routes: {
         ChooseLocation.id: (context) => ChooseLocation(),
         HomePage.id: (context) => HomePage(),
-        NewsPage.id: (context) => NewsPage()
+        NewsPage.id: (context) => NewsPage(),
+        NomineeListPage.id: (context) => NomineeListPage(),
+        NomineeDetails.id: (context) => NomineeDetails()
       },
     );
   }

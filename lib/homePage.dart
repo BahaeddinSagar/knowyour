@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:knowyour/APICalls.dart';
+import 'package:knowyour/nomineeList.dart';
+import 'package:knowyour/newsPage.dart';
 
 class HomePage extends StatelessWidget {
-  static String id = "homePage";
+  static const id = "homePage";
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,7 +38,7 @@ class HomePage extends StatelessWidget {
               ),
               Flexible(
                 flex: 40,
-                child: groupButtons(),
+                child: GroupButtons(),
               ),
             ],
           ),
@@ -45,8 +48,8 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class groupButtons extends StatelessWidget {
-  const groupButtons({
+class GroupButtons extends StatelessWidget {
+  const GroupButtons({
     Key key,
   }) : super(key: key);
 
@@ -59,9 +62,14 @@ class groupButtons extends StatelessWidget {
         Column(
           children: [
             Expanded(
-              child: buildIcon(
-                  imageString: 'assets/images/candidateIcon.png',
-                  goTo: 'candidates'),
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, NomineeListPage.id);
+                },
+                child: buildIcon(
+                    imageString: 'assets/images/candidateIcon.png',
+                    goTo: 'candidates'),
+              ),
               flex: 4,
             ),
             Spacer(
@@ -78,8 +86,13 @@ class groupButtons extends StatelessWidget {
         Column(
           children: [
             Expanded(
-              child: buildIcon(
-                  imageString: 'assets/images/newsIcon.png', goTo: 'news'),
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, NewsPage.id);
+                },
+                child: buildIcon(
+                    imageString: 'assets/images/newsIcon.png', goTo: 'news'),
+              ),
               flex: 4,
             ),
             Spacer(
@@ -100,6 +113,11 @@ class groupButtons extends StatelessWidget {
     return InkWell(
       child: Image.asset(imageString),
       onTap: () {
+        APICalls.getNominees(id: '1');
+        APICalls.getCV(id: '1');
+        APICalls.getProgram(id: '1');
+        APICalls.getSocialMedia(id: '1');
+        APICalls.getMedia(id: '1');
         print('you clicked ' + goTo);
       },
     );
