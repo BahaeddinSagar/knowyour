@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:knowyour/APICalls.dart';
+import 'package:knowyour/CustomWidgets/buildTile.dart';
 import 'package:knowyour/models/news.dart';
 
 class NewsPage extends StatelessWidget {
@@ -41,9 +42,7 @@ class NewsPage extends StatelessWidget {
                         News n = news[index];
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: buildNewsTile(
-                              newsImage: APICalls.baseURL + n.image,
-                              newsString: n.title),
+                          child: buildTile(imageURL: n.image, title: n.title),
                         );
                       },
                       itemCount: news.length);
@@ -62,27 +61,6 @@ class NewsPage extends StatelessWidget {
       decoration: BoxDecoration(color: Colors.orange),
       child: Column(
         children: [Image.network(newsImage), Text(newsString)],
-      ),
-    );
-  }
-
-  Widget buildNewsTile({String newsImage, String newsString}) {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      elevation: 18.0,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      child: Container(
-        decoration: BoxDecoration(color: Colors.orange),
-        child: Column(
-          children: [
-            Image.network(
-              newsImage,
-              fit: BoxFit.fill,
-            ),
-            Text(newsString)
-          ],
-        ),
       ),
     );
   }

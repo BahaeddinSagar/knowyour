@@ -1,3 +1,5 @@
+import '../APICalls.dart';
+
 /// id : 1
 /// name : "محمد المختار"
 /// region : "طرابلس المركز"
@@ -14,7 +16,7 @@ class Nominee {
   int get id => _id;
   String get name => _name;
   String get region => _region;
-  String get profilePicture => _profilePicture;
+  String get profilePicture => APICalls.baseURL + _profilePicture;
   String get updatedAt => _updatedAt;
 
   Nominee(

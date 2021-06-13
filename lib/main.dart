@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:knowyour/nomineeDetails.dart';
+import 'package:knowyour/Pages/CV.dart';
+import 'package:knowyour/Pages/electionProgram.dart';
+import 'package:knowyour/Pages/nomineeDetails.dart';
 
-import 'package:knowyour/nomineeList.dart';
-import 'package:knowyour/chooseLocation.dart';
-import 'package:knowyour/homePage.dart';
-import 'package:knowyour/newsPage.dart';
+import 'package:knowyour/Pages/nomineeList.dart';
+import 'package:knowyour/Pages/chooseLocation.dart';
+import 'package:knowyour/Pages/homePage.dart';
+import 'package:knowyour/Pages/newsPage.dart';
+
+import 'Pages/mediaPage.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,12 +31,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
-      initialRoute: NewsPage.id,
+      initialRoute: HomePage.id,
       routes: {
         ChooseLocation.id: (context) => ChooseLocation(),
         HomePage.id: (context) => HomePage(),
         NewsPage.id: (context) => NewsPage(),
         NomineeListPage.id: (context) => NomineeListPage(),
+        CVPage.id: (context) => CVPage(),
+        MediaPage.id: (context) => MediaPage(),
+        ElectionProgramPage.id: (context) => ElectionProgramPage(),
         NomineeDetails.id: (context) => NomineeDetails()
       },
     );

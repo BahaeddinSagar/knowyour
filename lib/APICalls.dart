@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as HttpClass;
 import 'package:knowyour/models/district.dart';
 import 'package:knowyour/models/news_details.dart';
@@ -20,51 +21,51 @@ class APICalls {
 
   static Future<List<Ad>> getAds() async {
     var url = Uri.parse(_apiURL + 'Home');
-    var resonse = await HttpClass.get(
+    var response = await HttpClass.get(
       url,
       headers: {
         'TOKEN': 'brHabhL0.z8K5naWw59eBgIIsidCIWsxDGkgVxgji',
       },
     );
-    if (resonse.statusCode == 200) {
-      var jsonResponse = resonse.body;
+    if (response.statusCode == 200) {
+      var jsonResponse = response.body;
       var decoded = jsonDecode(jsonResponse);
       var list = decoded['slides'] as List;
       List<Ad> ads = list.map((e) => Ad.fromJson(e)).toList();
       print(ads.toString());
       return ads;
     } else {
-      print("ERROR " + resonse.headers.toString());
-      print(resonse.request);
-      print(resonse.request.headers);
+      print("ERROR " + response.headers.toString());
+      print(response.request);
+      print(response.request.headers);
       return null;
     }
   }
 
   static Future<List<District>> getDistricts() async {
     var url = Uri.parse(_apiURL + 'Electoral_districts');
-    var resonse = await HttpClass.get(
+    var response = await HttpClass.get(
       url,
       headers: {
         'TOKEN': 'brHabhL0.z8K5naWw59eBgIIsidCIWsxDGkgVxgji',
       },
     );
-    if (resonse.statusCode == 200) {
-      var jsonResponse = resonse.body;
+    if (response.statusCode == 200) {
+      var jsonResponse = response.body;
       var decoded = jsonDecode(jsonResponse);
       var list = decoded['districts'] as List;
       List<District> districts = list.map((e) => District.fromJson(e)).toList();
       print(districts.toString());
       return districts;
     } else {
-      print("ERROR " + resonse.headers.toString());
-      print(resonse.request);
-      print(resonse.request.headers);
+      print("ERROR " + response.headers.toString());
+      print(response.request);
+      print(response.request.headers);
       return null;
     }
   }
 
-  static Future<List<Region>> getRegions({String id}) async {
+  static Future<List<Region>> getRegions({@required String id}) async {
     var url = Uri.parse(_apiURL + 'Regions');
     var resonse = await HttpClass.post(
       url,
@@ -88,7 +89,7 @@ class APICalls {
     }
   }
 
-  static Future<RegionDetails> getRegionDetails({String id}) async {
+  static Future<RegionDetails> getRegionDetails({@required String id}) async {
     var url = Uri.parse(_apiURL + 'Region_details');
     var resonse = await HttpClass.post(
       url,
@@ -135,7 +136,7 @@ class APICalls {
     }
   }
 
-  static Future<NewsDetails> getNewsDetails({String id}) async {
+  static Future<NewsDetails> getNewsDetails({@required String id}) async {
     var url = Uri.parse(_apiURL + 'News_details');
     var resonse = await HttpClass.post(
       url,
@@ -159,7 +160,7 @@ class APICalls {
     }
   }
 
-  static Future<List<Nominee>> getNominees({String id}) async {
+  static Future<List<Nominee>> getNominees({@required String id}) async {
     var url = Uri.parse(_apiURL + 'Nominees');
     var resonse = await HttpClass.post(
       url,
@@ -184,14 +185,14 @@ class APICalls {
     }
   }
 
-  static Future<CV> getCV({String id}) async {
-    var url = Uri.parse(_apiURL + 'News_details');
+  static Future<CV> getCV({@required String id}) async {
+    var url = Uri.parse(_apiURL + 'CV');
     var resonse = await HttpClass.post(
       url,
       headers: {
         'TOKEN': 'brHabhL0.z8K5naWw59eBgIIsidCIWsxDGkgVxgji',
       },
-      body: {'news_id': id},
+      body: {'nominee_id': id},
     );
     if (resonse.statusCode == 200) {
       var jsonResponse = resonse.body;
@@ -208,7 +209,7 @@ class APICalls {
     }
   }
 
-  static Future<Program> getProgram({String id}) async {
+  static Future<Program> getProgram({@required String id}) async {
     var url = Uri.parse(_apiURL + 'Program');
     var resonse = await HttpClass.post(
       url,
@@ -232,7 +233,7 @@ class APICalls {
     }
   }
 
-  static Future<SocialMedia> getSocialMedia({String id}) async {
+  static Future<SocialMedia> getSocialMedia({@required String id}) async {
     var url = Uri.parse(_apiURL + 'Social_media');
     var resonse = await HttpClass.post(
       url,
@@ -256,7 +257,7 @@ class APICalls {
     }
   }
 
-  static Future<List<Media>> getMedia({String id}) async {
+  static Future<List<Media>> getMedia({@required String id}) async {
     var url = Uri.parse(_apiURL + 'Media');
     var resonse = await HttpClass.post(
       url,

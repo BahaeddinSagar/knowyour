@@ -1,3 +1,5 @@
+import '../APICalls.dart';
+
 /// id : 1
 /// title : "فتح باب التسجيل للمترشحين من قبل المفوضية العليا للإنتخابات"
 /// image : "/media/images/news/news.png"
@@ -11,7 +13,7 @@ class News {
 
   int get id => _id;
   String get title => _title;
-  String get image => _image;
+  String get image => APICalls.baseURL + _image;
   String get updatedAt => _updatedAt;
 
   News({int id, String title, String image, String updatedAt}) {

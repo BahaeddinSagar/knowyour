@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:knowyour/APICalls.dart';
+import 'package:knowyour/Pages/nomineeDetails.dart';
+import 'package:knowyour/models/district.dart';
 
-import 'models/nominee.dart';
+import '../models/nominee.dart';
 
-class NomineeListPage extends StatelessWidget {
-  static String id = "CandidateListPage";
+class NomineeListPage extends StatefulWidget {
+  static const id = 'NomineeListPage';
 
+  @override
+  _NomineeListPageState createState() => _NomineeListPageState();
+}
+
+class _NomineeListPageState extends State<NomineeListPage> {
+  var selectedValue = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,8 +35,25 @@ class NomineeListPage extends StatelessWidget {
           ),
           Flexible(
             flex: 1,
-            child: DropdownButtonFormField(
-              items: [],
+            child: FutureBuilder(
+              future: APICalls.getDistricts(),
+              builder: (context, snapshot) {
+                final List<District> districts =
+                    snapshot.data as List<District>;
+                return DropdownButtonFormField(
+                  onChanged: (value) {
+                    setState(() {
+                      selectedValue = value;
+                    });
+                  },
+                  items: districts.map(
+                    (item) {
+                      return DropdownMenuItem(
+                          child: Text(item.name), value: item.id);
+                    },
+                  ).toList(),
+                );
+              },
             ),
           ),
           Flexible(
@@ -50,9 +75,7 @@ class NomineeListPage extends StatelessWidget {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CandidateItem(
-                            imageURL: APICalls.baseURL + nominee.profilePicture,
-                            name: nominee.name,
-                            location: nominee.region,
+                            nominee: nominee,
                           ),
                         );
                       },
@@ -69,36 +92,41 @@ class NomineeListPage extends StatelessWidget {
 }
 
 class CandidateItem extends StatelessWidget {
-  final String imageURL, name, circle, location;
-  CandidateItem({this.imageURL, this.name, this.circle, this.location});
+  final Nominee nominee;
+  CandidateItem({this.nominee});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Flexible(
-          child: Image.network(
-            imageURL,
-            height: 100,
-          ),
-          flex: 1,
-        ),
-        Flexible(
-          flex: 3,
-          child: Center(
-            child: Column(
-              children: [
-                Text(
-                  name,
-                  style: TextStyle(fontSize: 25),
-                ),
-                //  Text(circle),
-                Text(location)
-              ],
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(context, NomineeDetails.id, arguments: nominee);
+      },
+      child: Row(
+        children: [
+          Flexible(
+            child: Image.network(
+              nominee.profilePicture,
+              height: 100,
             ),
+            flex: 1,
           ),
-        )
-      ],
+          Flexible(
+            flex: 3,
+            child: Center(
+              child: Column(
+                children: [
+                  Text(
+                    nominee.name,
+                    style: TextStyle(fontSize: 25),
+                  ),
+                  //  Text(circle),
+                  Text(nominee.region)
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

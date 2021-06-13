@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:knowyour/APICalls.dart';
-import 'package:knowyour/nomineeList.dart';
-import 'package:knowyour/newsPage.dart';
+
+import 'package:knowyour/Pages/nomineeList.dart';
+import 'package:knowyour/Pages/newsPage.dart';
+
+import '../CustomWidgets/BuildIcon.dart';
 
 class HomePage extends StatelessWidget {
   static const id = "homePage";
@@ -28,7 +30,7 @@ class HomePage extends StatelessWidget {
               Flexible(
                 flex: 40,
                 child: Image.asset(
-                  'assets/images/adImage.png',
+                  'assets/images/newsSample.png',
                   fit: BoxFit.fill,
                 ),
               ),
@@ -60,16 +62,15 @@ class GroupButtons extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Expanded(
-              child: InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, NomineeListPage.id);
-                },
-                child: buildIcon(
-                    imageString: 'assets/images/candidateIcon.png',
-                    goTo: 'candidates'),
-              ),
+              child: buildIcon(
+                  imageString: 'assets/images/candidateIcon.png',
+                  function: () {
+                    Navigator.pushNamed(context, NomineeListPage.id);
+                  },
+                  context: context),
               flex: 4,
             ),
             Spacer(
@@ -78,7 +79,10 @@ class GroupButtons extends StatelessWidget {
             Expanded(
               child: buildIcon(
                   imageString: 'assets/images/resultsIcon.png',
-                  goTo: 'results'),
+                  context: context,
+                  function: () {
+                    Navigator.pushNamed(context, NomineeListPage.id);
+                  }),
               flex: 4,
             )
           ],
@@ -86,13 +90,12 @@ class GroupButtons extends StatelessWidget {
         Column(
           children: [
             Expanded(
-              child: InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, NewsPage.id);
-                },
-                child: buildIcon(
-                    imageString: 'assets/images/newsIcon.png', goTo: 'news'),
-              ),
+              child: buildIcon(
+                  imageString: 'assets/images/newsIcon.png',
+                  context: context,
+                  function: () {
+                    Navigator.pushNamed(context, NewsPage.id);
+                  }),
               flex: 4,
             ),
             Spacer(
@@ -100,26 +103,16 @@ class GroupButtons extends StatelessWidget {
             ),
             Expanded(
               child: buildIcon(
-                  imageString: 'assets/images/mapIcon.png', goTo: 'map'),
+                  imageString: 'assets/images/mapIcon.png',
+                  context: context,
+                  function: () {
+                    Navigator.pushNamed(context, NomineeListPage.id);
+                  }),
               flex: 4,
             ),
           ],
         )
       ],
-    );
-  }
-
-  InkWell buildIcon({String imageString, String goTo}) {
-    return InkWell(
-      child: Image.asset(imageString),
-      onTap: () {
-        APICalls.getNominees(id: '1');
-        APICalls.getCV(id: '1');
-        APICalls.getProgram(id: '1');
-        APICalls.getSocialMedia(id: '1');
-        APICalls.getMedia(id: '1');
-        print('you clicked ' + goTo);
-      },
     );
   }
 }
