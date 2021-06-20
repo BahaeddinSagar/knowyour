@@ -1,6 +1,11 @@
+import 'dart:async';
+
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:knowyour/Pages/CV.dart';
+import 'package:knowyour/Pages/NoInternet.dart';
 import 'package:knowyour/Pages/electionProgram.dart';
 import 'package:knowyour/Pages/nomineeDetails.dart';
 
@@ -15,8 +20,12 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -40,7 +49,8 @@ class MyApp extends StatelessWidget {
         CVPage.id: (context) => CVPage(),
         MediaPage.id: (context) => MediaPage(),
         ElectionProgramPage.id: (context) => ElectionProgramPage(),
-        NomineeDetails.id: (context) => NomineeDetails()
+        NomineeDetails.id: (context) => NomineeDetails(),
+        NoInternetPage.id: (context) => NoInternetPage()
       },
     );
   }
