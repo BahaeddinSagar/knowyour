@@ -3,9 +3,15 @@ import 'dart:async';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
+import 'package:knowyour/APICalls.dart';
+import 'package:knowyour/Pages/nomineeDetails.dart';
 
 import 'package:knowyour/Pages/nomineeList.dart';
 import 'package:knowyour/Pages/newsPage.dart';
+import 'package:knowyour/models/ad.dart';
+import 'package:knowyour/models/nominee.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../CustomWidgets/BuildIcon.dart';
 import 'NoInternet.dart';
@@ -18,7 +24,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String _connectionStatus = 'Unknown';
   final Connectivity _connectivity = Connectivity();
   StreamSubscription<ConnectivityResult> _connectivitySubscription;
   @override
@@ -65,7 +70,7 @@ class _HomePageState extends State<HomePage> {
         Navigator.pushReplacementNamed(context, NoInternetPage.id);
         break;
       default:
-        setState(() => _connectionStatus = 'Failed to get connectivity.');
+        print('Failed to get connectivity.');
         break;
     }
   }
@@ -91,11 +96,28 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Flexible(
-                flex: 40,
-                child: Image.asset(
-                  'assets/images/newsSample.png',
-                  fit: BoxFit.fill,
-                ),
+                flex: 30,
+                child: FutureBuilder(
+                    future: APICalls.getAds(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return Center(child: CircularProgressIndicator());
+                      } else {
+                        List<Ad> ads = snapshot.data;
+                        return ImageSlideshow(
+                          width: double.infinity,
+                          indicatorColor: Colors.blue,
+                          indicatorBackgroundColor: Colors.grey,
+                          children: ads.map((ad) {
+                            return InkWell(
+                                onTap: () {
+                                  openURL(ad.url);
+                                },
+                                child: Image.network(ad.image));
+                          }).toList(),
+                        );
+                      }
+                    }),
               ),
               Divider(
                 color: Colors.orange,
@@ -111,13 +133,28 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  openURL(String url) {
+    if (url.length < 10) {
+      //needs to be dynamic
+      Navigator.pushNamed(context, NomineeDetails.id,
+          arguments: Nominee(
+              id: 1,
+              name: "محمد المختار",
+              region: "طرابلس المركز",
+              profilePicture: "/media/images/nominees/Asset_71ldpi.png",
+              updatedAt: "2021-05-24T22:57:24.488097+02:00"));
+    } else {
+      if (canLaunch(url) != null)
+        launch(url);
+      else
+        throw "Could not launch $url";
+    }
+  }
 }
 
 class GroupButtons extends StatelessWidget {
-  const GroupButtons({
-    Key key,
-  }) : super(key: key);
-
+  double buttonHeight = 120;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -125,54 +162,41 @@ class GroupButtons extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Expanded(
-              child: buildIcon(
-                  imageString: 'assets/images/candidateIcon.png',
-                  function: () {
-                    Navigator.pushNamed(context, NomineeListPage.id);
-                  },
-                  context: context),
-              flex: 4,
-            ),
-            Spacer(
-              flex: 1,
-            ),
-            Expanded(
-              child: buildIcon(
-                  imageString: 'assets/images/resultsIcon.png',
-                  context: context,
-                  function: () {
-                    Navigator.pushNamed(context, NomineeListPage.id);
-                  }),
-              flex: 4,
-            )
+            buildIcon(
+                imageString: 'assets/images/candidateIcon.png',
+                height: buttonHeight,
+                function: () {
+                  Navigator.pushNamed(context, NomineeListPage.id);
+                },
+                context: context),
+            buildIcon(
+                imageString: 'assets/images/resultsIcon.png',
+                height: buttonHeight,
+                context: context,
+                function: () {
+                  Navigator.pushNamed(context, NomineeListPage.id);
+                })
           ],
         ),
         Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Expanded(
-              child: buildIcon(
-                  imageString: 'assets/images/newsIcon.png',
-                  context: context,
-                  function: () {
-                    Navigator.pushNamed(context, NewsPage.id);
-                  }),
-              flex: 4,
-            ),
-            Spacer(
-              flex: 1,
-            ),
-            Expanded(
-              child: buildIcon(
-                  imageString: 'assets/images/mapIcon.png',
-                  context: context,
-                  function: () {
-                    Navigator.pushNamed(context, NomineeListPage.id);
-                  }),
-              flex: 4,
-            ),
+            buildIcon(
+                imageString: 'assets/images/newsIcon.png',
+                height: buttonHeight,
+                context: context,
+                function: () {
+                  Navigator.pushNamed(context, NewsPage.id);
+                }),
+            buildIcon(
+                imageString: 'assets/images/mapIcon.png',
+                height: buttonHeight,
+                context: context,
+                function: () {
+                  Navigator.pushNamed(context, NomineeListPage.id);
+                }),
           ],
         )
       ],

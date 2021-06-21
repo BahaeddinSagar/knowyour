@@ -1,3 +1,5 @@
+import '../APICalls.dart';
+
 /// image : "/media/images/slides/slide1.png"
 /// desicription : "test"
 /// url : "http://google.com"
@@ -22,7 +24,7 @@ class Ad {
   }
 
   Ad.fromJson(dynamic json) {
-    _image = json["image"];
+    _image = APICalls.baseURL + json["image"];
     _desicription = json["desicription"];
     _url = json["url"];
     _updatedAt = json["updated_at"];

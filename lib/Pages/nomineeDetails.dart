@@ -29,12 +29,15 @@ class NomineeDetails extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10.0))),
                 child: Container(
+                  height: 300,
                   decoration: BoxDecoration(color: Colors.orange),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Image.network(
                         nominee.profilePicture,
-                        fit: BoxFit.fill,
+                        height: 220,
+                        fit: BoxFit.cover,
                       ),
                       Text('مرشح عن دائرة' + nominee.region)
                     ],
@@ -45,60 +48,52 @@ class NomineeDetails extends StatelessWidget {
             Flexible(
                 flex: 1,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Flexible(
                       flex: 1,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Flexible(
-                            flex: 1,
-                            child: buildIcon(
-                                imageString: 'assets/images/CVIcon.png',
-                                context: context,
-                                function: () {
-                                  print(nominee);
-                                  Navigator.pushNamed(context, CVPage.id,
-                                      arguments: nominee);
-                                }),
-                          ),
-                          Flexible(
-                            flex: 1,
-                            child: buildIcon(
-                                imageString: 'assets/images/blankIcon.png',
-                                context: context,
-                                function: () {
-                                  Navigator.pushNamed(
-                                      context, ElectionProgramPage.id,
-                                      arguments: nominee);
-                                }),
-                          ),
-                          Flexible(
-                            flex: 1,
-                            child: buildIcon(
-                                imageString: 'assets/images/mediaIcon.png',
-                                context: context,
-                                function: () {
-                                  Navigator.pushNamed(context, MediaPage.id,
-                                      arguments: nominee);
-                                }),
-                          )
+                          buildIcon(
+                              imageString: 'assets/images/CVIcon.png',
+                              height: 100,
+                              context: context,
+                              function: () {
+                                print(nominee);
+                                Navigator.pushNamed(context, CVPage.id,
+                                    arguments: nominee);
+                              }),
+                          buildIcon(
+                              imageString: 'assets/images/programIcon.png',
+                              height: 100,
+                              context: context,
+                              function: () {
+                                Navigator.pushNamed(
+                                    context, ElectionProgramPage.id,
+                                    arguments: nominee);
+                              }),
+                          buildIcon(
+                              imageString: 'assets/images/mediaIcon.png',
+                              height: 100,
+                              context: context,
+                              function: () {
+                                Navigator.pushNamed(context, MediaPage.id,
+                                    arguments: nominee);
+                              })
                         ],
                       ),
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: buildIcon(
-                          imageString: 'assets/images/SocialMedia.png',
-                          context: context,
-                          function: () {
-                            Navigator.pushNamed(context, 'media',
-                                arguments: nominee);
-                          }),
-                    )
+                    buildIcon(
+                        imageString: 'assets/images/SocialMedia.png',
+                        height: 100,
+                        context: context,
+                        function: () {
+                          Navigator.pushNamed(context, 'media',
+                              arguments: nominee);
+                        })
                   ],
                 ))
           ],
