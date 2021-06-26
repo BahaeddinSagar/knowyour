@@ -13,6 +13,7 @@ import 'package:knowyour/Pages/nomineeList.dart';
 import 'package:knowyour/Pages/chooseLocation.dart';
 import 'package:knowyour/Pages/homePage.dart';
 import 'package:knowyour/Pages/newsPage.dart';
+import 'package:knowyour/Pages/socialMedia.dart';
 
 import 'Pages/mediaPage.dart';
 
@@ -50,6 +51,7 @@ class _MyAppState extends State<MyApp> {
         MediaPage.id: (context) => MediaPage(),
         ElectionProgramPage.id: (context) => ElectionProgramPage(),
         NomineeDetails.id: (context) => NomineeDetails(),
+        SocialMediaPage.id: (context) => SocialMediaPage(),
         NoInternetPage.id: (context) => NoInternetPage()
       },
     );

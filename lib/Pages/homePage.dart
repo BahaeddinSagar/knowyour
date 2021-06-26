@@ -100,8 +100,11 @@ class _HomePageState extends State<HomePage> {
                 child: FutureBuilder(
                     future: APICalls.getAds(),
                     builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
+                      print(snapshot.connectionState);
+                      if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(child: CircularProgressIndicator());
+                      } else if (!snapshot.hasData) {
+                        return Center(child: Text("لا يوجد اتصال بالانترنت"));
                       } else {
                         List<Ad> ads = snapshot.data;
                         return ImageSlideshow(

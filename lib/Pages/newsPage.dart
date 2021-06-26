@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:knowyour/APICalls.dart';
 import 'package:knowyour/CustomWidgets/buildTile.dart';
+import 'package:knowyour/Pages/newsDetails.dart';
 import 'package:knowyour/models/news.dart';
+import 'package:knowyour/models/news_details.dart';
 
 class NewsPage extends StatelessWidget {
   static const id = "newsPage";
@@ -42,7 +44,13 @@ class NewsPage extends StatelessWidget {
                         News n = news[index];
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: buildTile(imageURL: n.image, title: n.title),
+                          child: InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context, NewsDetailsPage.id,
+                                    arguments: n.id);
+                              },
+                              child:
+                                  buildTile(imageURL: n.image, title: n.title)),
                         );
                       },
                       itemCount: news.length);

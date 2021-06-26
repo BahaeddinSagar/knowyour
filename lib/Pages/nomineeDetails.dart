@@ -5,6 +5,7 @@ import 'package:knowyour/CustomWidgets/BuildIcon.dart';
 import 'package:knowyour/Pages/CV.dart';
 import 'package:knowyour/Pages/electionProgram.dart';
 import 'package:knowyour/Pages/mediaPage.dart';
+import 'package:knowyour/Pages/socialMedia.dart';
 
 import '../models/nominee.dart';
 
@@ -91,7 +92,7 @@ class NomineeDetails extends StatelessWidget {
                         height: 100,
                         context: context,
                         function: () {
-                          Navigator.pushNamed(context, 'media',
+                          Navigator.pushNamed(context, SocialMediaPage.id,
                               arguments: nominee);
                         })
                   ],
