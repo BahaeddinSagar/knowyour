@@ -20,7 +20,7 @@ class _NomineeListPageState extends State<NomineeListPage> {
   int selectedRegion;
   List<District> districts;
   List<Region> regions;
-
+  final GlobalKey<FormFieldState> _key = GlobalKey();
   final String _apiURL = APICalls.baseURL + '/API/';
 
   getDistricts() async {
@@ -64,8 +64,8 @@ class _NomineeListPageState extends State<NomineeListPage> {
       List<Region> regs = list.map((e) => Region.fromJson(e)).toList();
       print(regs.toString());
       setState(() {
+        resetRegions();
         regions = regs;
-        selectedRegion = regions[0].id;
       });
     } else {
       print("ERROR " + resonse.headers.toString());
@@ -100,11 +100,12 @@ class _NomineeListPageState extends State<NomineeListPage> {
                       child: Image.asset('assets/images/newsImage.png'),
                     ),
                   ),
-                  flex: 2,
+                  flex: 8,
                 ),
                 Flexible(
-                  flex: 1,
+                  flex: 5,
                   child: DropdownButtonFormField(
+                    hint: Text(' اختر منطقة'),
                     onChanged: (value) {
                       setState(() {
                         selectedDistrict = value;
@@ -120,27 +121,29 @@ class _NomineeListPageState extends State<NomineeListPage> {
                   ),
                 ),
                 Flexible(
-                  flex: 1,
-                  child: regions == null
-                      ? DropdownButtonFormField(items: [])
-                      : DropdownButtonFormField(
-                          onChanged: (value) {
-                            setState(() {
-                              selectedRegion = value;
-                              print(selectedRegion);
-                            });
-                          },
-                          value: regions[0].id,
-                          items: regions.map(
+                  flex: 5,
+                  child: DropdownButtonFormField(
+                    key: _key,
+                    hint: Text(' اختر دائرة انتخابية'),
+                    onChanged: (value) {
+                      setState(() {
+                        selectedRegion = value;
+                        print(selectedRegion);
+                      });
+                    },
+                    value: null,
+                    items: regions == null
+                        ? []
+                        : regions.map(
                             (item) {
                               return DropdownMenuItem(
                                   child: Text(item.name), value: item.id);
                             },
                           ).toList(),
-                        ),
+                  ),
                 ),
                 Flexible(
-                  flex: 10,
+                  flex: 40,
                   child: selectedRegion == null
                       ? ListView()
                       : FutureBuilder(
@@ -165,6 +168,7 @@ class _NomineeListPageState extends State<NomineeListPage> {
                                   itemCount: snapshot.data.length,
                                   itemBuilder: (context, index) {
                                     Nominee nominee = snapshot.data[index];
+                                    print(nominee);
                                     return Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: CandidateItem(
@@ -181,6 +185,10 @@ class _NomineeListPageState extends State<NomineeListPage> {
               ],
             ),
     );
+  }
+
+  void resetRegions() {
+    _key.currentState.reset();
   }
 }
 
@@ -213,7 +221,8 @@ class CandidateItem extends StatelessWidget {
                     style: TextStyle(fontSize: 25),
                   ),
                   //  Text(circle),
-                  Text(nominee.region)
+                  Text(nominee.region),
+                  Text(nominee.district)
                 ],
               ),
             ),

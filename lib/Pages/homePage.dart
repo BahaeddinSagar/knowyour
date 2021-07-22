@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:knowyour/Pages/nomineeList.dart';
 import 'package:knowyour/Pages/newsPage.dart';
 import 'package:knowyour/models/ad.dart';
 import 'package:knowyour/models/nominee.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../CustomWidgets/BuildIcon.dart';
@@ -26,6 +28,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final Connectivity _connectivity = Connectivity();
   StreamSubscription<ConnectivityResult> _connectivitySubscription;
+
   @override
   initState() {
     super.initState();
@@ -56,7 +59,24 @@ class _HomePageState extends State<HomePage> {
     if (!mounted) {
       return Future.value(null);
     }
-
+    // Check to see if Android Location permissions are enabled
+    // Described in https://github.com/flutter/flutter/issues/51529
+    if (Platform.isAndroid) {
+      print('Checking Android permissions');
+      var status = await Permission.location.status;
+      // Blocked?
+      if (status.isDenied || status.isRestricted) {
+        // Ask the user to unblock
+        if (await Permission.location.request().isGranted) {
+          // Either the permission was already granted before or the user just granted it.
+          print('Location permission granted');
+        } else {
+          print('Location permission not granted');
+        }
+      } else {
+        print('Permission already granted (previous execution?)');
+      }
+    }
     return _updateConnectionStatus(result);
   }
 
@@ -78,25 +98,21 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-/*      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/page3Background-LOW.png'),
-          fit: BoxFit.fill,
-        ),
-      ),
-      */
       child: Scaffold(
         appBar: AppBar(
-          title: Text("الصفحة الرئيسية"),
+          title: Text(
+            "الصفحة الرئيسية",
+          ),
         ),
         body: Container(
           color: Colors.lightBlue,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Flexible(
-                flex: 30,
+              Container(
+                width: double.infinity,
+                height: 200,
                 child: FutureBuilder(
                     future: APICalls.getAds(),
                     builder: (context, snapshot) {
@@ -116,7 +132,11 @@ class _HomePageState extends State<HomePage> {
                                 onTap: () {
                                   openURL(ad.url);
                                 },
-                                child: Image.network(ad.image));
+                                child: Image.network(
+                                  ad.image,
+                                  width: double.infinity,
+                                  fit: BoxFit.fitWidth,
+                                ));
                           }).toList(),
                         );
                       }
@@ -126,8 +146,8 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.orange,
                 thickness: 10,
               ),
-              Flexible(
-                flex: 40,
+              Padding(
+                padding: const EdgeInsets.only(top: 32.0),
                 child: GroupButtons(),
               ),
             ],
@@ -157,15 +177,15 @@ class _HomePageState extends State<HomePage> {
 }
 
 class GroupButtons extends StatelessWidget {
-  double buttonHeight = 120;
+  final buttonHeight = 150.0;
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             buildIcon(
                 imageString: 'assets/images/candidateIcon.png',
@@ -184,7 +204,7 @@ class GroupButtons extends StatelessWidget {
           ],
         ),
         Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             buildIcon(
                 imageString: 'assets/images/newsIcon.png',

@@ -40,7 +40,8 @@ class NomineeDetails extends StatelessWidget {
                         height: 220,
                         fit: BoxFit.cover,
                       ),
-                      Text('مرشح عن دائرة' + nominee.region)
+                      Text('مرشح عن دائرة' + nominee.region),
+                      Text(nominee.district)
                     ],
                   ),
                 ),

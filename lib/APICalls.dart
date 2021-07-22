@@ -32,7 +32,7 @@ class APICalls {
       var decoded = jsonDecode(jsonResponse);
       var list = decoded['slides'] as List;
       List<Ad> ads = list.map((e) => Ad.fromJson(e)).toList();
-      print(ads.toString());
+      //(ads.toString());
       return ads;
     } else {
       print("ERROR " + response.headers.toString());
@@ -55,7 +55,7 @@ class APICalls {
       var decoded = jsonDecode(jsonResponse);
       var list = decoded['districts'] as List;
       List<District> districts = list.map((e) => District.fromJson(e)).toList();
-      print(districts.toString());
+      //print(districts.toString());
       return districts;
     } else {
       print("ERROR " + response.headers.toString());
@@ -79,7 +79,7 @@ class APICalls {
       var decoded = jsonDecode(jsonResponse);
       var list = decoded['regions'] as List;
       List<Region> regions = list.map((e) => Region.fromJson(e)).toList();
-      print(regions.toString());
+      //print(regions.toString());
       return regions;
     } else {
       print("ERROR " + resonse.headers.toString());
@@ -103,7 +103,7 @@ class APICalls {
       var decoded = jsonDecode(jsonResponse);
       var regionjson = decoded['region'];
       RegionDetails regionDetails = RegionDetails.fromJson(regionjson);
-      print(regionDetails.toString());
+      //print(regionDetails.toString());
       return regionDetails;
     } else {
       print("ERROR " + resonse.headers.toString());
@@ -126,7 +126,7 @@ class APICalls {
       var decoded = jsonDecode(jsonResponse);
       var list = decoded['news'] as List;
       List<News> news = list.map((e) => News.fromJson(e)).toList();
-      print(news.toString());
+      //print(news.toString());
       return news;
     } else {
       print("ERROR " + resonse.headers.toString());
@@ -150,7 +150,7 @@ class APICalls {
       var decoded = jsonDecode(jsonResponse);
       var newsJSON = decoded['news'];
       NewsDetails newsDetails = NewsDetails.fromJson(newsJSON);
-      print(newsDetails.toString());
+      //print(newsDetails.toString());
       return newsDetails;
     } else {
       print("ERROR " + resonse.headers.toString());
@@ -172,9 +172,12 @@ class APICalls {
     if (resonse.statusCode == 200) {
       var jsonResponse = resonse.body;
       var decoded = jsonDecode(jsonResponse);
-      print(decoded);
+      //print(decoded);
       var list = decoded['nominees'] as List;
-      List<Nominee> nominees = list.map((e) => Nominee.fromJson(e)).toList();
+      var region = decoded['region'] as String;
+      var district = decoded['electoral_districts'] as String;
+      List<Nominee> nominees =
+          list.map((e) => Nominee.fromJson(e, region, district)).toList();
       print(nominees.toString());
       return nominees;
     } else {
@@ -199,7 +202,7 @@ class APICalls {
       var decoded = jsonDecode(jsonResponse);
 
       CV cv = CV.fromJson(decoded);
-      print(cv.toString());
+      //print(cv.toString());
       return cv;
     } else {
       print("ERROR " + resonse.headers.toString());
@@ -223,7 +226,7 @@ class APICalls {
       var decoded = jsonDecode(jsonResponse);
 
       Program program = Program.fromJson(decoded);
-      print(program.toString());
+      //print(program.toString());
       return program;
     } else {
       print("ERROR " + resonse.headers.toString());
@@ -247,7 +250,7 @@ class APICalls {
       var decoded = jsonDecode(jsonResponse);
 
       SocialMedia socialMedia = SocialMedia.fromJson(decoded);
-      print(socialMedia.toString());
+      //print(socialMedia.toString());
       return socialMedia;
     } else {
       print("ERROR " + resonse.headers.toString());
@@ -271,7 +274,7 @@ class APICalls {
       var decoded = jsonDecode(jsonResponse);
       var list = decoded['media'] as List;
       List<Media> mideas = list.map((e) => Media.fromJson(e)).toList();
-      print(mideas.toString());
+      //print(mideas.toString());
       return mideas;
     } else {
       print("ERROR " + resonse.headers.toString());

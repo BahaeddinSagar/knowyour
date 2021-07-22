@@ -10,8 +10,11 @@ class Nominee {
   int _id;
   String _name;
   String _region;
+  String _district;
   String _profilePicture;
   String _updatedAt;
+
+  String get district => _district;
 
   int get id => _id;
   String get name => _name;
@@ -24,18 +27,21 @@ class Nominee {
       String name,
       String region,
       String profilePicture,
+      String district,
       String updatedAt}) {
     _id = id;
     _name = name;
     _region = region;
+    _district = district;
     _profilePicture = profilePicture;
     _updatedAt = updatedAt;
   }
 
-  Nominee.fromJson(dynamic json) {
+  Nominee.fromJson(dynamic json, String region, String district) {
     _id = json["id"];
     _name = json["name"];
-    _region = json["region"];
+    _region = region;
+    _district = district;
     _profilePicture = json["profile_picture"];
     _updatedAt = json["updated_at"];
   }

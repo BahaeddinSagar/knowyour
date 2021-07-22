@@ -6,10 +6,13 @@ InkWell buildIcon(
     @required BuildContext context,
     @required Function function}) {
   return InkWell(
-    child: Image.asset(
-      imageString,
-      height: height,
-      fit: BoxFit.scaleDown,
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Image.asset(
+        imageString,
+        height: height,
+        fit: BoxFit.scaleDown,
+      ),
     ),
     onTap: function,
   );

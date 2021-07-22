@@ -14,7 +14,6 @@ class NoInternetPage extends StatefulWidget {
 }
 
 class _NoInternetPageState extends State<NoInternetPage> {
-  String _connectionStatus = 'Unknown';
   final Connectivity _connectivity = Connectivity();
   StreamSubscription<ConnectivityResult> _connectivitySubscription;
   initState() {
@@ -60,7 +59,6 @@ class _NoInternetPageState extends State<NoInternetPage> {
       case ConnectivityResult.none:
         break;
       default:
-        setState(() => _connectionStatus = 'Failed to get connectivity.');
         break;
     }
   }

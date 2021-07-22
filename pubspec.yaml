@@ -23,6 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
   flutter_localizations:
     sdk: flutter
   provider: ^5.0.0
@@ -31,9 +32,10 @@ dependencies:
   http: ^0.13.3
   flutter_html: ^2.1.0
   connectivity: ^3.0.6
-  data_connection_checker: ^0.3.4
   flutter_image_slideshow: ^0.1.0
   url_launcher: ^6.0.6
+  permission_handler: ^8.1.2
+  cached_network_image: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -45,6 +47,13 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   uses-material-design: true
+  fonts:
+    - family: Cairo
+      fonts:
+        - asset: fonts/Cairo/Cairo-Regular.ttf
+    - family: Almarai
+      fonts:
+        - asset: fonts/Almarai/Almarai-Regular.ttf
 
 
   assets:

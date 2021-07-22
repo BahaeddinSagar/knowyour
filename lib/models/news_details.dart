@@ -1,3 +1,5 @@
+import 'package:knowyour/APICalls.dart';
+
 /// id : 1
 /// title : "فتح باب التسجيل للمترشحين من قبل المفوضية العليا للإنتخابات"
 /// body : "<p>تفاصيل الخبر</p>"
@@ -22,7 +24,7 @@ class NewsDetails {
     _id = id;
     _title = title;
     _body = body;
-    _image = image;
+    _image = APICalls.baseURL + image;
     _updatedAt = updatedAt;
   }
 
@@ -30,7 +32,7 @@ class NewsDetails {
     _id = json["id"];
     _title = json["title"];
     _body = json["body"];
-    _image = json["image"];
+    _image = APICalls.baseURL + json["image"];
     _updatedAt = json["updated_at"];
   }
 

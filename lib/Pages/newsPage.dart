@@ -3,7 +3,6 @@ import 'package:knowyour/APICalls.dart';
 import 'package:knowyour/CustomWidgets/buildTile.dart';
 import 'package:knowyour/Pages/newsDetails.dart';
 import 'package:knowyour/models/news.dart';
-import 'package:knowyour/models/news_details.dart';
 
 class NewsPage extends StatelessWidget {
   static const id = "newsPage";

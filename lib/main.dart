@@ -1,12 +1,9 @@
-import 'dart:async';
-
-import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:knowyour/Pages/CV.dart';
 import 'package:knowyour/Pages/NoInternet.dart';
 import 'package:knowyour/Pages/electionProgram.dart';
+import 'package:knowyour/Pages/newsDetails.dart';
 import 'package:knowyour/Pages/nomineeDetails.dart';
 
 import 'package:knowyour/Pages/nomineeList.dart';
@@ -39,6 +36,7 @@ class _MyAppState extends State<MyApp> {
       locale: Locale('ar', ''),
       title: 'اعرف ناخبك',
       theme: ThemeData(
+        fontFamily: 'Cairo',
         primarySwatch: Colors.orange,
       ),
       initialRoute: HomePage.id,
@@ -46,6 +44,7 @@ class _MyAppState extends State<MyApp> {
         ChooseLocation.id: (context) => ChooseLocation(),
         HomePage.id: (context) => HomePage(),
         NewsPage.id: (context) => NewsPage(),
+        NewsDetailsPage.id: (context) => NewsDetailsPage(),
         NomineeListPage.id: (context) => NomineeListPage(),
         CVPage.id: (context) => CVPage(),
         MediaPage.id: (context) => MediaPage(),
