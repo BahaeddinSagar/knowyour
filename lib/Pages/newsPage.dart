@@ -46,7 +46,7 @@ class NewsPage extends StatelessWidget {
                           child: InkWell(
                               onTap: () {
                                 Navigator.pushNamed(context, NewsDetailsPage.id,
-                                    arguments: n.id);
+                                    arguments: n);
                               },
                               child:
                                   buildTile(imageURL: n.image, title: n.title)),
@@ -67,7 +67,10 @@ class NewsPage extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(color: Colors.orange),
       child: Column(
-        children: [Image.network(newsImage), Text(newsString)],
+        children: [
+          Hero(tag: 'testing', child: Image.network(newsImage)),
+          Text(newsString)
+        ],
       ),
     );
   }

@@ -17,6 +17,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../CustomWidgets/BuildIcon.dart';
 import 'NoInternet.dart';
+import 'mapPage.dart';
 
 class HomePage extends StatefulWidget {
   static const id = "homePage";
@@ -218,7 +219,7 @@ class GroupButtons extends StatelessWidget {
                 height: buttonHeight,
                 context: context,
                 function: () {
-                  Navigator.pushNamed(context, NomineeListPage.id);
+                  Navigator.pushNamed(context, MapPage.id);
                 }),
           ],
         )

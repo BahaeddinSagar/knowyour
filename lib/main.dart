@@ -12,6 +12,7 @@ import 'package:knowyour/Pages/homePage.dart';
 import 'package:knowyour/Pages/newsPage.dart';
 import 'package:knowyour/Pages/socialMedia.dart';
 
+import 'Pages/mapPage.dart';
 import 'Pages/mediaPage.dart';
 
 void main() {
@@ -44,6 +45,7 @@ class _MyAppState extends State<MyApp> {
         ChooseLocation.id: (context) => ChooseLocation(),
         HomePage.id: (context) => HomePage(),
         NewsPage.id: (context) => NewsPage(),
+        MapPage.id: (context) => MapPage(),
         NewsDetailsPage.id: (context) => NewsDetailsPage(),
         NomineeListPage.id: (context) => NomineeListPage(),
         CVPage.id: (context) => CVPage(),
